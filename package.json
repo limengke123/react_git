@@ -4,7 +4,9 @@
   "description": "2017/3/7\r 李梦克",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "cd server && json-server db.json -w -p 3000",
+    "roadhog": "roadhog server"
   },
   "repository": {
     "type": "git",

@@ -1,24 +1,31 @@
 /**
- * Created by 75214 on 2017/3/8.
+ * Created by 75214 on 2017/3/11.
  */
 import React from 'react';
-import FormItem from '../components/FormItem';
+import FormItem from './FormItem';
 import formProvider from '../utils/formProvider';
-import {Router, Route, hashHistory} from 'react-router';
 import HomeLayout from '../layouts/homeLayout';
 
-class UserAdd extends React.Component {
+class UserEditor extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
 
-        const {form:{name, age, gender}, formValid} = this.props;
+        const {form:{name, age, gender}, formValid, editTarget} = this.props;
         if (!formValid) {
             alert('请填写正确');
             return;
         }
 
-        fetch('http://localhost:3000/user', {
-            method: 'post',
+        let editType = '添加';
+        let apiUrl = 'http://localhost:3000/user';
+        let method = 'post';
+        if (editTarget) {
+            editType = '编辑';
+            apiUrl += '/' + editTarget.id;
+            method = 'put';
+        }
+        fetch(apiUrl, {
+            method,
             body: JSON.stringify({
                 name: name.value,
                 age: age.value,
@@ -31,10 +38,10 @@ class UserAdd extends React.Component {
             .then((res) => res.json())
             .then((res) => {
                 if (res.id) {
-                    alert('添加成功');
+                    alert(editType+'用户成功');
                     this.context.router.push('/user/list');
                 } else {
-                    alert('添加失败');
+                    alert(editType+'失败');
                 }
             })
             .catch((err) => {
@@ -42,10 +49,17 @@ class UserAdd extends React.Component {
             });
     }
 
+    componentWillMount(){
+        const{editTarget,setFormValues}=this.props;
+        if(editTarget){
+            setFormValues(editTarget);
+        }
+    }
+
     render() {
-        const {form:{name, age, gender}, onFormChange} = this.props;
+        const {form:{name, age, gender}, onFormChange}=this.props;
+
         return (
-            <HomeLayout title="添加用户">
                 <form onSubmit={(e) => this.handleSubmit(e)}>
                     <FormItem label="用户名" valid={name.valid} error={name.error}>
                         <input type="text" value={name.value}
@@ -68,14 +82,14 @@ class UserAdd extends React.Component {
                     <br/>
                     <input type="submit" value="提交"/>
                 </form>
-            </HomeLayout>
-        );
+        )
     }
 }
-UserAdd.contextTypes = {
+UserEditor.contextTypes = {
     router: React.PropTypes.object.isRequired
 };
-UserAdd = formProvider({
+
+UserEditor = formProvider({
     name: {
         defaultValue: '',
         rules: [
@@ -113,7 +127,6 @@ UserAdd = formProvider({
             }
         ]
     }
-})(UserAdd);
+})(UserEditor);
 
-export default UserAdd;
-
+export default UserEditor;

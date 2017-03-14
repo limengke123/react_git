@@ -51,7 +51,12 @@ class BookEditor extends React.Component {
             })
             .catch(err => console.log(err));
     }
-
+    componentWillMount(){
+        const{editTarget,setFormValues} = this.props;
+        if(editTarget){
+            setFormValues(editTarget);
+        }
+    }
     render() {
         const {form:{name, price, owner_id}, onFormChange}=this.props;
         return (

@@ -88,13 +88,13 @@
   "book": [
     {
       "name": "11111",
-      "price": 2222,
+      "price": 2,
       "owner_id": 333,
       "id": 1
     },
     {
       "name": "111",
-      "price": 22,
+      "price": 2,
       "owner_id": 3,
       "id": 2
     }

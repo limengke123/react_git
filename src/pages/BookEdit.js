@@ -10,7 +10,7 @@ class BookEdit extends React.Component {
         super(props);
         this.state = {
             book: null
-        }
+        };
     }
 
     componentWillMount() {
@@ -20,12 +20,12 @@ class BookEdit extends React.Component {
             .then(res => {
                 this.setState({
                     book: res
-                })
-            })
+                });
+            });
     }
 
     render() {
-        const book = this.state;
+        const {book} = this.state;
         return (
             <HomeLayout title="书本编辑">
                 {

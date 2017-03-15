@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack-dev-server --devtool --progress",
     "build": "webpack -p",
-    "server":"cd data && json-server test.json"
+    "server":"cd data && json-server test.json",
+    "server2":"node server/index.js"
   },
   "repository": {
     "type": "git",
